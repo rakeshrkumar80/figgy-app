@@ -1,0 +1,30 @@
+gcloud projects add-iam-policy-binding trainocat-1773726784474 \
+  --member="serviceAccount:613010334177-compute@developer.gserviceaccount.com" \
+  --role="roles/storage.admin"
+
+gcloud projects add-iam-policy-binding trainocat-1773726784474 \
+  --member="serviceAccount:613010334177-compute@developer.gserviceaccount.com" \
+  --role="roles/logging.logWriter"  
+
+gcloud projects add-iam-policy-binding trainocat-1773726784474 \
+  --member="serviceAccount:613010334177-compute@developer.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer"
+
+gcloud builds submit \
+  --tag gcr.io/trainocat-1773726784474/user-service:v1
+gcloud artifacts repositories create figgy-repo \
+  --repository-format=docker \
+  --location=us-central1 \
+  --description="Figgy Docker Repo"
+
+gcloud auth configure-docker us-central1-docker.pkg.dev
+
+gcloud builds submit \
+  --tag us-central1-docker.pkg.dev/trainocat-1773726784474/figgy-repo/user-service:v1 \
+  src/user-service
+
+gcloud run deploy user-service \
+  --image us-central1-docker.pkg.dev/trainocat-1773726784474/figgy-repo/user-service:v1 \
+  --region us-central1 \
+  --allow-unauthenticated
+  
