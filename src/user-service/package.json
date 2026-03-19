@@ -1,0 +1,17 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "User service for Figgy food delivery app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/pubsub": "^4.0.7",
+    "express": "^4.19.2",
+    "uuid": "^9.0.1"
+  }
+}
